@@ -7,10 +7,7 @@ use WyriHaximus\HtmlCompress\Compressor\HtmlCompressor as DefaultCompressor;
 
 final class HtmlCompressor implements HtmlCompressorInterface
 {
-    /**
-     * @var CompressorInterface
-     */
-    private $defaultCompressor;
+    private CompressorInterface $defaultCompressor;
 
     public function __construct(Patterns $patterns)
     {

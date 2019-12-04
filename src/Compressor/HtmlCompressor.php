@@ -9,8 +9,7 @@ use WyriHaximus\HtmlCompress\Patterns;
 
 final class HtmlCompressor implements CompressorInterface
 {
-    /** @var HtmlMin */
-    private $htmlMin;
+    private HtmlMin $htmlMin;
 
     public function __construct(Patterns $patterns)
     {

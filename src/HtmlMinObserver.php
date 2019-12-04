@@ -2,15 +2,13 @@
 
 namespace WyriHaximus\HtmlCompress;
 
-use voku\helper\HtmlMin;
 use voku\helper\HtmlMinDomObserverInterface;
 use voku\helper\HtmlMinInterface;
 use voku\helper\SimpleHtmlDomInterface;
 
 final class HtmlMinObserver implements HtmlMinDomObserverInterface
 {
-    /** @var Patterns */
-    private $patterns;
+    private Patterns $patterns;
 
     public function __construct(Patterns $patterns)
     {
@@ -19,9 +17,6 @@ final class HtmlMinObserver implements HtmlMinDomObserverInterface
 
     /**
      * Receive dom elements before the minification.
-     *
-     * @param SimpleHtmlDomInterface $element
-     * @param HtmlMinInterface       $htmlMin
      */
     public function domElementBeforeMinification(SimpleHtmlDomInterface $element, HtmlMinInterface $htmlMin): void
     {
@@ -30,9 +25,6 @@ final class HtmlMinObserver implements HtmlMinDomObserverInterface
 
     /**
      * Receive dom elements after the minification.
-     *
-     * @param SimpleHtmlDomInterface $element
-     * @param HtmlMinInterface       $htmlMin
      */
     public function domElementAfterMinification(SimpleHtmlDomInterface $element, HtmlMinInterface $htmlMin): void
     {

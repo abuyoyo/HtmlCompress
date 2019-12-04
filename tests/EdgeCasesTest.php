@@ -2,8 +2,17 @@
 
 namespace WyriHaximus\HtmlCompress\Tests;
 
+use Generator;
 use WyriHaximus\HtmlCompress\Factory;
 use WyriHaximus\TestUtilities\TestCase;
+use function array_pop;
+use function assert;
+use function explode;
+use function file_get_contents;
+use function glob;
+use function is_string;
+use const DIRECTORY_SEPARATOR;
+use const GLOB_ONLYDIR;
 
 /**
  * @internal
@@ -11,34 +20,34 @@ use WyriHaximus\TestUtilities\TestCase;
 final class EdgeCasesTest extends TestCase
 {
     /**
-     * @return array[]
+     * @return Generator<array<int, string>>
      */
-    public function providerEdgeCase(): array
+    public function providerEdgeCase(): Generator
     {
-        $dirs = [];
-
-        $items = \glob(__DIR__ . \DIRECTORY_SEPARATOR . 'EdgeCases' . \DIRECTORY_SEPARATOR . '*', \GLOB_ONLYDIR);
-        if ($items !== false) {
-            foreach ($items as $item) {
-                $itemName = \explode(\DIRECTORY_SEPARATOR, $item);
-                $itemName = \array_pop($itemName);
-                $dirs[$itemName] = [$item . \DIRECTORY_SEPARATOR];
-            }
+        $items = glob(__DIR__ . DIRECTORY_SEPARATOR . 'EdgeCases' . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
+        if ($items === false) {
+            return;
         }
 
-        return $dirs;
+        foreach ($items as $item) {
+            $itemName = explode(DIRECTORY_SEPARATOR, $item);
+            $itemName = array_pop($itemName);
+
+            yield $itemName => [$item . DIRECTORY_SEPARATOR];
+        }
     }
 
     /**
-     * @dataProvider providerEdgeCase
      * @param mixed $dir
+     *
+     * @dataProvider providerEdgeCase
      */
     public function testEdgeCase($dir): void
     {
-        /** @var string $in */
-        $in = \file_get_contents($dir . 'in.html');
-        /** @var string $out */
-        $out = \file_get_contents($dir . 'out.html');
+        $in = file_get_contents($dir . 'in.html');
+        assert(is_string($in));
+        $out = file_get_contents($dir . 'out.html');
+        assert(is_string($out));
 
         $result = Factory::constructSmallest()->compress($in);
 

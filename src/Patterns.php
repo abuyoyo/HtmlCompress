@@ -7,10 +7,10 @@ use voku\helper\SimpleHtmlDomInterface;
 final class Patterns
 {
     /** @var PatternInterface[] */
-    private $patterns = [];
+    private array $patterns = [];
 
     /**
-     * @param PatternInterface ...$patterns
+     * @param array<int, PatternInterface> $patterns
      */
     public function __construct(PatternInterface ...$patterns)
     {

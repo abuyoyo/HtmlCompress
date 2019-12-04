@@ -5,11 +5,11 @@ namespace WyriHaximus\HtmlCompress\Pattern;
 use voku\helper\SimpleHtmlDomInterface;
 use WyriHaximus\Compress\CompressorInterface;
 use WyriHaximus\HtmlCompress\PatternInterface;
+use function strlen;
 
 final class LdJson implements PatternInterface
 {
-    /** @var CompressorInterface */
-    private $compressor;
+    private CompressorInterface $compressor;
 
     public function __construct(CompressorInterface $compressor)
     {
@@ -37,25 +37,20 @@ final class LdJson implements PatternInterface
 
     public function compress(SimpleHtmlDomInterface $element): void
     {
-        /** @var string $innerHtml */
-        $innerHtml = $element->innerhtml;
+        $innerHtml           = $element->innerhtml;
         $compressedInnerHtml = $this->compressor->compress($innerHtml);
 
         if ($compressedInnerHtml === '') {
             return;
         }
 
-        if (\strlen($compressedInnerHtml) >= \strlen($innerHtml)) {
+        if (strlen($compressedInnerHtml) >= strlen($innerHtml)) {
             return;
         }
 
-        $attributes = '';
+        $attributes        = '';
         $elementAttributes = $element->getAllAttributes();
         if ($elementAttributes !== null) {
-            /**
-             * @var string $attributeName
-             * @var string $attributeValue
-             */
             foreach ($elementAttributes as $attributeName => $attributeValue) {
                 $attributes .= $attributeName . '="' . $attributeValue . '"';
             }

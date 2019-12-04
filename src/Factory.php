@@ -45,8 +45,7 @@ final class Factory
     }
 
     /**
-     * @param  bool                    $externalCompressors When set to false only use pure PHP compressors.
-     * @return HtmlCompressorInterface
+     * @param  bool $externalCompressors When set to false only use pure PHP compressors.
      */
     public static function constructSmallest(bool $externalCompressors = true): HtmlCompressorInterface
     {
