@@ -15,6 +15,7 @@ final class HtmlCompressor implements CompressorInterface
     public function __construct(Patterns $patterns)
     {
         $this->htmlMin = new HtmlMin();
+        $this->htmlMin->doRemoveSpacesBetweenTags(true);
         $this->htmlMin->attachObserverToTheDomLoop(new HtmlMinObserver($patterns));
     }
 
